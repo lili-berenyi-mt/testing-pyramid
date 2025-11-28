@@ -1,12 +1,12 @@
 #cloud-config
-package_update = true
+package_update: true
 packages:
-    - nginx
-    - docker
+  - nginx
+  - docker
 
 write_files:
   - path: /etc/nginx/sites-available/my-site.conf
-    permissions: '0644'
+    permissions: "0644"
     content: |
       server {
         listen 80;
@@ -33,5 +33,3 @@ runcmd:
   - docker rm tdd-safari
   - docker build -t tdd-safari:latest .
   - docker run -d -p 5000:5000 --name tdd-safari tdd-safari:latest
-
-
