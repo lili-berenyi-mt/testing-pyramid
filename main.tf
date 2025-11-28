@@ -2,6 +2,12 @@ provider "aws" {
     region="eu-north-1"
 }
 
+variable "docker_username" {
+  type        = string
+  description = "DockerHub username"
+  sensitive = true
+}
+
 data "aws_ami" "ubuntu" {
   most_recent = true
   filter {
@@ -49,10 +55,4 @@ resource "aws_instance" "app_server" {
 output "ec2_public_ip" {
   description = "Public IP address of the EC2 instance"
   value = aws_instance.app_server.public_ip
-}
-
-variable "docker_username" {
-  type        = string
-  description = "DockerHub username"
-  sensitive = true
 }
