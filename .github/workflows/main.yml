@@ -46,6 +46,9 @@ jobs:
   deploy:
     needs: docker-build
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: checkout code
         uses: actions/checkout@v4
