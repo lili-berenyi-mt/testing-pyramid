@@ -28,8 +28,7 @@ runcmd:
   - systemctl start docker
   - systemctl enable docker
 
-  - docker pull ${docker_username}/tdd-safari:latest
-  - docker stop tdd-safari
-  - docker rm tdd-safari
-  - docker build -t tdd-safari:latest .
-  - docker run -d -p 5000:5000 --name tdd-safari tdd-safari:latest
+  - sudo docker pull ${docker_username}/tdd-safari:latest
+  - sudo docker stop tdd-safari
+  - sudo docker rm tdd-safari
+  - sudo docker run -d -p 5000:5000 --name tdd-safari docker.io/${docker_username}/tdd-safari:latest
