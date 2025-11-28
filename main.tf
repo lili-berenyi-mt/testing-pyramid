@@ -32,11 +32,6 @@ resource "local_file" "public_key" {
   filename = "./.ssh/terraform_rsa.pub"
 }
 
-resource "aws_key_pair" "app_key" {
-  key_name   = "terraform-key" 
-  public_key = tls_private_key.ssh_key.public_key_openssh
-}
-
 resource "aws_instance" "app_server" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = "t3.micro"
