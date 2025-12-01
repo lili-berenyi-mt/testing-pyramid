@@ -8,3 +8,5 @@ venv
 *.tfstate
 *.tfstate.*
 .terraform
+node_modules
+cypress/screenshots/
