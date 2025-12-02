@@ -1,13 +1,12 @@
-from models.duty import Duty
 from repo import DutyRepo
-from services import DutyService
+from services import DutyService, AddDutyResult
 
 def test_add_duty():
     duty_repo = DutyRepo()
     duty_service = DutyService(duty_repo)
 
     result = duty_service.add(1, "test")
-    assert result == True
+    assert result == AddDutyResult.SUCCESS
 
     duties = duty_service.get_all()
     assert len(duties) == 1
@@ -37,7 +36,7 @@ def test_cannot_add_duplicate_duty():
     result = duty_service.add(1, "test B")
     duties = duty_service.get_all()
 
-    assert result == False
+    assert result == AddDutyResult.DUPLICATE
     assert len(duties) == 1
     assert duties[0].get_summary() == "Duty 1: test A"
 
@@ -49,7 +48,7 @@ def test_cannot_add_duty_with_empty_description():
     result = duty_service.add(1, "")
     duties = duty_service.get_all()
 
-    assert result == False
+    assert result == AddDutyResult.EMPTY_DESCRIPTION
     assert len(duties) == 0
 
 def test_returns_empty_list_when_no_duties():

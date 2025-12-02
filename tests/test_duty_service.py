@@ -1,4 +1,4 @@
-from services import DutyService
+from services import DutyService, AddDutyResult
 from models import Duty
 
 def test_duty_can_be_added(mocker):
@@ -9,7 +9,7 @@ def test_duty_can_be_added(mocker):
     result = duty_service.add(number=1, description="test")
 
     mock_repo.add.assert_called_once()
-    assert result == True
+    assert result == AddDutyResult.SUCCESS
 
 def test_can_add_multiple_duties(mocker):
     mock_repo = mocker.Mock()
@@ -19,8 +19,8 @@ def test_can_add_multiple_duties(mocker):
     result1 = duty_service.add(1, "Test1")
     result2 = duty_service.add(2, "Test2")
 
-    assert result1 == True
-    assert result2 == True
+    assert result1 == AddDutyResult.SUCCESS
+    assert result2 == AddDutyResult.SUCCESS
     assert mock_repo.add.call_count == 2
 
 def test_duplicate_duty_cannot_be_added(mocker):
@@ -33,7 +33,7 @@ def test_duplicate_duty_cannot_be_added(mocker):
     result = duty_service.add(number=1, description="test2")
 
     assert mock_repo.add.call_count == 0
-    assert result == False
+    assert result == AddDutyResult.DUPLICATE
 
 def test_duty_with_empty_description_cannot_be_added(mocker):
     mock_repo = mocker.Mock()
@@ -43,7 +43,7 @@ def test_duty_with_empty_description_cannot_be_added(mocker):
     result = duty_service.add(1,"")
 
     assert mock_repo.add.call_count == 0
-    assert result == False
+    assert result == AddDutyResult.EMPTY_DESCRIPTION
     
 
 def test_can_read_all_duties(mocker):

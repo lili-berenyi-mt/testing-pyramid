@@ -1,4 +1,6 @@
 from models import Duty
+from .results import AddDutyResult
+
 class DutyService:
     def __init__(self, repo):
         self.repo = repo
@@ -7,13 +9,13 @@ class DutyService:
         try:
             new_duty = Duty(number, description)
         except ValueError:
-            return False
+            return AddDutyResult.EMPTY_DESCRIPTION
         
         duties = self.repo.get_all()
         if any(duty.equals(new_duty) for duty in duties):
-            return False
+            return AddDutyResult.DUPLICATE
         self.repo.add(Duty(number, description))
-        return True
+        return AddDutyResult.SUCCESS
     
     def get_all(self):
         return self.repo.get_all()
